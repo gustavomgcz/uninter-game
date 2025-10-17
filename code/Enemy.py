@@ -1,15 +1,19 @@
-import pygame
-
-
-from code.Const import ENTITY_SPEED, WIN_WIDTH
+from code.Const import ENTITY_SHOOT_DELAY, ENTITY_SPEED
+from code.EnemyShoot import EnemyShoot
 from code.Entity import Entity
 
 
 class Enemy(Entity):
     def __init__(self, name, position):
         super().__init__(name, position)
+        self.shoot_delay = ENTITY_SHOOT_DELAY[self.name]
 
     def move(self, ):
         self.rect.centerx -= ENTITY_SPEED[self.name]
-        if self.rect.right <= 0:
-            self.rect.left = WIN_WIDTH
+
+    def shoot(self, ):
+        self.shoot_delay -= 1
+        if self.shoot_delay == 0:
+            self.shoot_delay = ENTITY_SHOOT_DELAY[self.name]
+            return EnemyShoot(name=f'{self.name}Shoot', position=(
+                self.rect.centerx, self.rect.centery))
