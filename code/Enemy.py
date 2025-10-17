@@ -1,9 +1,12 @@
+import pygame
+
+
+from code.Const import ENTITY_SPEED, WIN_WIDTH
 from code.Entity import Entity
-from code.Const import WIN_WIDTH, ENTITY_SPEED
 
 
-class Background(Entity):
-    def __init__(self, name: str, position: tuple):
+class Enemy(Entity):
+    def __init__(self, name, position):
         super().__init__(name, position)
 
     def move(self, ):
