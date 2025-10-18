@@ -9,6 +9,7 @@ WIN_HEIGHT = 405
 TITLE_TEXT_COLOR = (255, 128, 0)
 OPTIONS_TEXT_COLOR = (255, 255, 255)
 OPTIONS_ACTIVE_TEXT_COLOR = (255, 215, 0)
+HUD_PLAYER_HEALTH = (255, 0, 0)
 
 # Menu Options
 MENU_OPTION = ('NEW GAME 1P',
@@ -53,9 +54,45 @@ ENTITY_HEALTH = {
     'Enemy2Shoot': 1,
 }
 
+ENTITY_DAMAGE = {
+    'Level1Bg0': 0,
+    'Level1Bg1': 0,
+    'Level1Bg2': 0,
+    'Level1Bg3': 0,
+    'Level1Bg4': 0,
+    'Level1Bg5': 0,
+    'Level1Bg6': 0,
+    'Player1': 1,
+    'Player2': 1,
+    'Enemy1': 1,
+    'Enemy2': 1,
+    'Player1Shoot': 25,
+    'Player2Shoot': 25,
+    'Enemy1Shoot': 10,
+    'Enemy2Shoot': 15,
+}
+
+ENTITY_SCORE = {
+    'Level1Bg0': 0,
+    'Level1Bg1': 0,
+    'Level1Bg2': 0,
+    'Level1Bg3': 0,
+    'Level1Bg4': 0,
+    'Level1Bg5': 0,
+    'Level1Bg6': 0,
+    'Player1': 0,
+    'Player2': 0,
+    'Enemy1': 100,
+    'Enemy2': 150,
+    'Player1Shoot': 0,
+    'Player2Shoot': 0,
+    'Enemy1Shoot': 0,
+    'Enemy2Shoot': 0,
+}
+
 ENTITY_SHOOT_DELAY = {
     'Player1': 20,
-    'Playes2': 20,
+    'Player2': 20,
     'Enemy1': 75,
     'Enemy2': 115,
 }

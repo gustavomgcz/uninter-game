@@ -1,7 +1,7 @@
 import random
 import pygame
 
-from code.Const import EVENT_ENEMY, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION
+from code.Const import EVENT_ENEMY, HUD_PLAYER_HEALTH, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -39,6 +39,12 @@ class Level:
                     shoot = ent.shoot()
                     if shoot is not None:
                         self.entity_list.append(shoot)
+                if ent.name == 'Player1':
+                    self.level_text(
+                        16, f'Player1 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 30))
+                if ent.name == 'Player2':
+                    self.level_text(
+                        16, f'Player2 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 50))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
