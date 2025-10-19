@@ -1,7 +1,8 @@
 import random
 import pygame
 
-from code.Const import EVENT_ENEMY, HUD_PLAYER_HEALTH, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION
+from code.Boss import Boss
+from code.Const import EVENT_ENEMY, EVENT_TIMEOUT, HUD_PLAYER_HEALTH, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -15,7 +16,7 @@ from code.Player import Player
 
 class Level:
     def __init__(self, window, name, game_mode):
-        self.timeout = 20000  # 20s
+        self.timeout = 5000  # 30s
         self.window = window
         self.name = name
         self.game_mode = game_mode
@@ -24,18 +25,32 @@ class Level:
         self.entity_list.append(EntityFactory.get_entity('Player1'))
         if game_mode in [MENU_OPTION[1], MENU_OPTION[2]]:
             self.entity_list.append(EntityFactory.get_entity('Player2'))
-        pygame.time.set_timer(EVENT_ENEMY, 3000)
+        pygame.time.set_timer(EVENT_ENEMY, random.randint(1000, 3500))
+        pygame.time.set_timer(EVENT_TIMEOUT, 100)
 
     def run(self):
         pygame.mixer_music.load(f'./assets/sounds/{self.name}.wav')
         pygame.mixer_music.play(-1)
         clock = pygame.time.Clock()
+        boss_spawned = False
         while True:
             clock.tick(60)
+
+            players_alive = [ent for ent in self.entity_list if isinstance(
+                ent, Player) and ent.health > 0]
+            if not players_alive:
+                return 'lose'
+
+            boss_alive = [boss for boss in self.entity_list if isinstance(
+                boss, Boss) and boss.health > 0]
+
+            if boss_spawned and not boss_alive:
+                return 'win'
+
             for ent in self.entity_list:
                 self.window.blit(source=ent.surf, dest=ent.rect)
                 ent.move()
-                if isinstance(ent, (Player, Enemy)):
+                if isinstance(ent, (Player, Enemy, Boss)):
                     shoot = ent.shoot()
                     if shoot is not None:
                         self.entity_list.append(shoot)
@@ -45,6 +60,7 @@ class Level:
                 if ent.name == 'Player2':
                     self.level_text(
                         16, f'Player2 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 50))
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -52,6 +68,12 @@ class Level:
                 if event.type == EVENT_ENEMY:
                     choice = random.choice(('Enemy1', 'Enemy2'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
+                if event.type == EVENT_TIMEOUT:
+                    self.timeout -= 100
+                    if self.timeout <= 0 and not boss_spawned:
+                        boss_spawned = True
+                        self.entity_list.append(
+                            EntityFactory.get_entity('Boss'))
 
             self.level_text(
                 14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', OPTIONS_TEXT_COLOR, (10, 5))

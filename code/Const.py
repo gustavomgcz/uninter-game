@@ -14,9 +14,19 @@ HUD_PLAYER_HEALTH = (255, 0, 0)
 # Menu Options
 MENU_OPTION = ('NEW GAME 1P',
                'NEW GAME 2P - COOPERATIVE',
-               'NEW GAME 2P - COMPETITIVE',
-               'SCORE',
                'EXIT')
+
+MENU_REPLAY = ('PLAY AGAIN',
+               'EXIT')
+
+CONTROLS = ('Player 1 Movement:',
+            '- Up, Down, Left, Right',
+            'Player 1 Shoot:',
+            '- Hold Right CTRL',
+            'Player 2 Movement:',
+            '- W, S, A, D',
+            'Player 2 Shoot:',
+            '- Hold Left CTRL',)
 
 # Entities
 ENTITY_SPEED = {
@@ -35,7 +45,10 @@ ENTITY_SPEED = {
     'Player2Shoot': 5,
     'Enemy1Shoot': 4,
     'Enemy2Shoot': 3,
+    'Boss': 0,
+    'BossShoot': 6,
 }
+
 ENTITY_HEALTH = {
     'Level1Bg0': 9999,
     'Level1Bg1': 9999,
@@ -44,14 +57,16 @@ ENTITY_HEALTH = {
     'Level1Bg4': 9999,
     'Level1Bg5': 9999,
     'Level1Bg6': 9999,
-    'Player1': 300,
-    'Player2': 300,
+    'Player1': 1,
+    'Player2': 1,
     'Enemy1': 50,
     'Enemy2': 60,
     'Player1Shoot': 1,
     'Player2Shoot': 1,
     'Enemy1Shoot': 1,
     'Enemy2Shoot': 1,
+    'Boss': 10,
+    'BossShoot': 1,
 }
 
 ENTITY_DAMAGE = {
@@ -70,6 +85,8 @@ ENTITY_DAMAGE = {
     'Player2Shoot': 25,
     'Enemy1Shoot': 10,
     'Enemy2Shoot': 15,
+    'Boss': 1,
+    'BossShoot': 50,
 }
 
 ENTITY_SCORE = {
@@ -88,6 +105,8 @@ ENTITY_SCORE = {
     'Player2Shoot': 0,
     'Enemy1Shoot': 0,
     'Enemy2Shoot': 0,
+    'Boss': 0,
+    'BossShoot': 1000,
 }
 
 ENTITY_SHOOT_DELAY = {
@@ -95,10 +114,13 @@ ENTITY_SHOOT_DELAY = {
     'Player2': 20,
     'Enemy1': 75,
     'Enemy2': 115,
+    'Boss': 45,
 }
 
 # Events
 EVENT_ENEMY = pygame.USEREVENT + 1
+
+EVENT_TIMEOUT = pygame.USEREVENT + 2
 
 # Controls
 PLAYER_KEY_UP = {'Player1': pygame.K_UP,

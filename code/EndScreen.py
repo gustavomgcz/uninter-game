@@ -2,17 +2,18 @@ import pygame
 
 from pygame import Surface, Rect
 from pygame.font import Font
-from code.Const import CONTROLS, WIN_WIDTH, TITLE_TEXT_COLOR, MENU_OPTION, OPTIONS_TEXT_COLOR, OPTIONS_ACTIVE_TEXT_COLOR
+from code.Const import MENU_REPLAY, WIN_WIDTH, TITLE_TEXT_COLOR, OPTIONS_TEXT_COLOR, OPTIONS_ACTIVE_TEXT_COLOR
 
 
-class Menu:
-    def __init__(self, window):
+class EndScreen:
+    def __init__(self, window, level_return):
         self.window = window
+        self.level_return = level_return
         self.surf = pygame.image.load(
             './assets/images/MenuBg.png').convert_alpha()
         self.rect = self.surf.get_rect(left=0, top=0)
 
-    def run(self,):
+    def run(self, level_return):
         menu_option = 0
         pygame.mixer_music.load('./assets/sounds/MenuSound.mp3')
         pygame.mixer_music.play(-1)
@@ -20,23 +21,31 @@ class Menu:
         while True:
             # Draw images
             self.window.blit(source=self.surf, dest=self.rect)
-            self.menu_text(50, "Halloween", TITLE_TEXT_COLOR,
-                           ((WIN_WIDTH / 4), 70))
-            self.menu_text(50, "Flight", TITLE_TEXT_COLOR,
-                           ((WIN_WIDTH / 4), 120))
+            self.menu_text(50, 'Halloween', TITLE_TEXT_COLOR,
+                           ((WIN_WIDTH / 2), 70))
+            self.menu_text(50, 'Flight', TITLE_TEXT_COLOR,
+                           ((WIN_WIDTH / 2), 120))
+            if level_return == 'win':
+                self.menu_text(75, 'You Won!', TITLE_TEXT_COLOR,
+                               ((WIN_WIDTH / 2), 175))
+                self.menu_text(50, 'End of demo.', (159, 121, 242),
+                               ((WIN_WIDTH / 2), 225))
+                self.menu_text(50, 'Do you want to play again?', (159, 121, 242),
+                               ((WIN_WIDTH / 2), 260))
+            elif level_return == 'lose':
+                self.menu_text(75, 'You died!', TITLE_TEXT_COLOR,
+                               ((WIN_WIDTH / 2), 175))
+                self.menu_text(50, 'Try again?', TITLE_TEXT_COLOR,
+                               ((WIN_WIDTH / 2), 225))
 
-            # Create menu
-            for i in range(len(MENU_OPTION)):
+                # Create menu
+            for i in range(len(MENU_REPLAY)):
                 if i == menu_option:
                     self.menu_text(
-                        30, MENU_OPTION[i], OPTIONS_ACTIVE_TEXT_COLOR, ((WIN_WIDTH / 4), 200 + 30 * i))
+                        30, MENU_REPLAY[i], OPTIONS_ACTIVE_TEXT_COLOR, ((WIN_WIDTH / 2), 300 + 30 * i))
                 else:
                     self.menu_text(
-                        30, MENU_OPTION[i], OPTIONS_TEXT_COLOR, ((WIN_WIDTH / 4), 200 + 30 * i))
-
-            for i in range(len(CONTROLS)):
-                self.menu_text(
-                    25, CONTROLS[i], OPTIONS_TEXT_COLOR, ((WIN_WIDTH / 1.30), 125 + 30 * i))
+                        30, MENU_REPLAY[i], OPTIONS_TEXT_COLOR, ((WIN_WIDTH / 2), 300 + 30 * i))
 
             pygame.display.flip()
 
@@ -50,17 +59,17 @@ class Menu:
                 # Event for keydown
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
-                        if menu_option < len(MENU_OPTION) - 1:
+                        if menu_option < len(MENU_REPLAY) - 1:
                             menu_option += 1
                         else:
                             menu_option = 0
                     if event.key == pygame.K_UP:
                         if menu_option == 0:
-                            menu_option = len(MENU_OPTION) - 1
+                            menu_option = len(MENU_REPLAY) - 1
                         else:
                             menu_option -= 1
                     if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-                        return MENU_OPTION[menu_option]
+                        return MENU_REPLAY[menu_option]
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
         text_font: Font = pygame.font.SysFont(

@@ -1,3 +1,5 @@
+from code.Boss import Boss
+from code.BossShoot import BossShoot
 from code.Const import WIN_WIDTH
 from code.Enemy import Enemy
 from code.EnemyShoot import EnemyShoot
@@ -30,6 +32,14 @@ class EntityMediator:
         elif isinstance(ent1, Player) and isinstance(ent2, EnemyShoot):
             valid_interaction = True
         elif isinstance(ent1, EnemyShoot) and isinstance(ent2, Player):
+            valid_interaction = True
+        if isinstance(ent1, Boss) and isinstance(ent2, PlayerShoot):
+            valid_interaction = True
+        elif isinstance(ent1, PlayerShoot) and isinstance(ent2, Boss):
+            valid_interaction = True
+        elif isinstance(ent1, Player) and isinstance(ent2, BossShoot):
+            valid_interaction = True
+        elif isinstance(ent1, BossShoot) and isinstance(ent2, Player):
             valid_interaction = True
 
         if valid_interaction:
