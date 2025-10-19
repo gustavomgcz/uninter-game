@@ -2,7 +2,7 @@ import random
 import pygame
 
 from code.Boss import Boss
-from code.Const import EVENT_ENEMY, EVENT_TIMEOUT, HUD_PLAYER_HEALTH, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION
+from code.Const import EVENT_ENEMY, EVENT_TIMEOUT, HUD_PLAYER_HEALTH, OPTIONS_TEXT_COLOR, WIN_HEIGHT, MENU_OPTION, WIN_WIDTH
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -16,7 +16,7 @@ from code.Player import Player
 
 class Level:
     def __init__(self, window, name, game_mode):
-        self.timeout = 5000  # 30s
+        self.timeout = 60000  # 60s
         self.window = window
         self.name = name
         self.game_mode = game_mode
@@ -56,10 +56,13 @@ class Level:
                         self.entity_list.append(shoot)
                 if ent.name == 'Player1':
                     self.level_text(
-                        16, f'Player1 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 30))
+                        16, f'Player1 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 10))
                 if ent.name == 'Player2':
                     self.level_text(
-                        16, f'Player2 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 50))
+                        16, f'Player2 - Health: {ent.health} | Score: {ent.score}', HUD_PLAYER_HEALTH, (10, 30))
+                if ent.name == 'Boss':
+                    self.level_text(
+                        16, f'Boss Health: {ent.health}', HUD_PLAYER_HEALTH, (WIN_WIDTH - 110, 10))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -76,11 +79,12 @@ class Level:
                             EntityFactory.get_entity('Boss'))
 
             self.level_text(
-                14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', OPTIONS_TEXT_COLOR, (10, 5))
+                14, self.name, OPTIONS_TEXT_COLOR, (WIN_WIDTH / 2, 5))
+            if self.timeout > 0:
+                self.level_text(
+                    14, f'Boss arriving in: {self.timeout / 1000:.1f}s', OPTIONS_TEXT_COLOR, (WIN_WIDTH / 2 - 35, 20))
             self.level_text(
-                14, f'fps: {clock.get_fps():.0f}', OPTIONS_TEXT_COLOR, (10, WIN_HEIGHT - 35))
-            self.level_text(
-                14, f'entidades: {len(self.entity_list)}', OPTIONS_TEXT_COLOR, (10, WIN_HEIGHT - 20))
+                14, f'fps: {clock.get_fps():.0f}', OPTIONS_TEXT_COLOR, (10, WIN_HEIGHT - 20))
             pygame.display.flip()
 
             # Collisions

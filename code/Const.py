@@ -13,7 +13,7 @@ HUD_PLAYER_HEALTH = (255, 0, 0)
 
 # Menu Options
 MENU_OPTION = ('NEW GAME 1P',
-               'NEW GAME 2P - COOPERATIVE',
+               'NEW GAME 2P',
                'EXIT')
 
 MENU_REPLAY = ('PLAY AGAIN',
@@ -37,11 +37,11 @@ ENTITY_SPEED = {
     'Level1Bg4': 4,
     'Level1Bg5': 5,
     'Level1Bg6': 6,
-    'Player1': 4,
+    'Player1': 5,
     'Player2': 4,
     'Enemy1': 3,
     'Enemy2': 2,
-    'Player1Shoot': 5,
+    'Player1Shoot': 4,
     'Player2Shoot': 5,
     'Enemy1Shoot': 4,
     'Enemy2Shoot': 3,
@@ -57,15 +57,15 @@ ENTITY_HEALTH = {
     'Level1Bg4': 9999,
     'Level1Bg5': 9999,
     'Level1Bg6': 9999,
-    'Player1': 1,
-    'Player2': 1,
+    'Player1': 200,
+    'Player2': 150,
     'Enemy1': 50,
     'Enemy2': 60,
     'Player1Shoot': 1,
     'Player2Shoot': 1,
     'Enemy1Shoot': 1,
     'Enemy2Shoot': 1,
-    'Boss': 10,
+    'Boss': 1000,
     'BossShoot': 1,
 }
 
@@ -81,8 +81,8 @@ ENTITY_DAMAGE = {
     'Player2': 1,
     'Enemy1': 1,
     'Enemy2': 1,
-    'Player1Shoot': 25,
-    'Player2Shoot': 25,
+    'Player1Shoot': 30,
+    'Player2Shoot': 20,
     'Enemy1Shoot': 10,
     'Enemy2Shoot': 15,
     'Boss': 1,
@@ -110,8 +110,8 @@ ENTITY_SCORE = {
 }
 
 ENTITY_SHOOT_DELAY = {
-    'Player1': 20,
-    'Player2': 20,
+    'Player1': 30,
+    'Player2': 15,
     'Enemy1': 75,
     'Enemy2': 115,
     'Boss': 45,
